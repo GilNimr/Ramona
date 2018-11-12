@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Ramona.Sprites;
+using System;
 using System.Collections.Generic;
 using XELibrary;
 
@@ -14,13 +15,18 @@ namespace Ramona
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        public SpriteFont _font;
+
+        public SpriteFont font_damage;
+
         private CelAnimationManager celAnimationManager;
 
         private InputHandler inputHandler;
 
+        Random random;
+
         private Player player;
-        private Ghost ghost;
+     
+        
         public List<Sprite> sprites;
 
         public static int ScreenWidth;
@@ -28,7 +34,7 @@ namespace Ramona
 
         public Game1()
         {
-             
+            random = new Random();
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 1000;
             graphics.PreferredBackBufferHeight = 600;
@@ -44,28 +50,48 @@ namespace Ramona
             celAnimationManager = new CelAnimationManager(this, "Textures\\");
             Components.Add(celAnimationManager);
 
-            player = new Player(this);
-            Components.Add(player);
 
-            ghost = new Ghost(this,player);
-            Components.Add(ghost);
+
+            player = new Player(this);
+          
+            
+            sprites = new List<Sprite>()
+            {
+                new Ghost(this,player,random),
+                new Ghost(this,player,random),
+                new Ghost(this,player,random),
+                new Ghost(this,player,random),
+                new Ghost(this,player,random),
+                new Ghost(this,player,random),
+                new Ghost(this,player,random),
+                new Ghost(this,player,random),
+                player
+            };
+            
+            foreach(Sprite sprite in sprites)
+            {
+                Components.Add(sprite);
+                
+            }
+            
+            
         }
 
         protected override void Initialize()
         {
-           
-            
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            font_damage = Content.Load<SpriteFont>("Font");
 
-            _font = Content.Load<SpriteFont>("Font");
-
-            player.Load(spriteBatch,_font);
-            ghost.Load(spriteBatch,_font);
+            foreach(Sprite sprite in sprites)
+            {
+                sprite.Load(spriteBatch, font_damage);
+            }
+           
         }
 
         protected override void UnloadContent()

@@ -11,26 +11,36 @@ namespace Ramona.Sprites
 {
     public class Sprite : DrawableGameComponent
     {
-        //SpriteBatch spriteBatch;
-        public SpriteFont damage;
+        protected SpriteBatch spriteBatch;
+
+        public SpriteFont font_damage;
+        public float x_damage_font_position;
+        public float y_damage_font_position;
+        public Vector2 damage_font_position { get { return new Vector2(x_damage_font_position, y_damage_font_position); } }
+
         public Vector2 position;
         public float speed;
         public float knockOut_speed;
-       public enum Direction { Left,Right};
+        protected float _is_swung_timer;
+        protected bool life_minus = false;
+
+        public enum Direction { Left,Right};
         public Direction direction = Direction.Right;
+
         public Texture2D texture;
         public int frameWidth;
         public int frameheight;
-        Texture2D _texture;
+       
         public int life;
-        public Random random =new Random();
+
+        
 
 
         public Sprite(Game game )
             :base(game)
         {
             
-            
+
         }
 
         public Rectangle Rectangle
@@ -44,6 +54,13 @@ namespace Ramona.Sprites
         {
             base.Initialize();
         }
+
+        public void Load(SpriteBatch spriteBatch, SpriteFont _damage)
+        {
+            this.spriteBatch = spriteBatch;
+            font_damage = _damage;
+        }
+
         #region Colloision
         protected bool IsTouchingLeft(Sprite sprite)
         {
@@ -86,7 +103,11 @@ namespace Ramona.Sprites
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
+           spriteBatch.Begin();
             spriteBatch.Draw(texture, position, Color.White);
+            spriteBatch.End();
         }
+
+
     }
 }

@@ -12,9 +12,12 @@ namespace Ramona.Sprites
 {
     public class Player : Sprite
     {
-        
-        
-        SpriteBatch spriteBatch;
+
+
+        //SpriteBatch spriteBatch;
+
+        public bool swinging_enemy;
+        public bool dealing_damage;
 
         ICelAnimationManager celAnimationManager;
         IInputHandler inputHandler;
@@ -25,6 +28,7 @@ namespace Ramona.Sprites
 
             celAnimationManager = (ICelAnimationManager)game.Services.GetService(typeof(ICelAnimationManager));
             inputHandler = (IInputHandler)game.Services.GetService(typeof(IInputHandler));
+
             position = new Vector2(100f, 500f);
             speed = 5f;
             life = 100;
@@ -35,11 +39,12 @@ namespace Ramona.Sprites
         {
             base.Initialize();
         }
-        public void Load(SpriteBatch spriteBatch,SpriteFont _damage)
+
+       /* public void Load(SpriteBatch spriteBatch,SpriteFont _damage)
         {
             this.spriteBatch = spriteBatch;
-            damage = _damage;
-        }
+            font_damage = _damage;
+        }*/
 
         protected override void LoadContent()
         {
@@ -52,16 +57,17 @@ namespace Ramona.Sprites
 
             celCount = new CelCount(8, 1);
             celAnimationManager.AddAnimation("Ramona_run", "Ramona_run", celCount, 10);
+
             frameheight = celAnimationManager.GetAnimationFrameHeight("Ramona_run");
             frameWidth = celAnimationManager.GetAnimationFrameWidth("Ramona_run");
-            celAnimationManager.ToggleAnimation("Ramona_run");
 
-           
+            celAnimationManager.ToggleAnimation("Ramona_run");
+  
         }
+
         String currentAnimation = "Ramona_run";
-        public bool swing_damage;
-        public bool slam_damage;
-        float swing_time = 0;
+        
+       // float swing_time = 0;
 
         public override void Update(GameTime gameTime)
         {
@@ -73,7 +79,7 @@ namespace Ramona.Sprites
                 currentAnimation = "Ramona_run";
                 direction = Direction.Right;
                 position.X += speed;
-                swing_damage = false;
+                swinging_enemy = false;
             }
             else if (inputHandler.KeyboardHandler.IsKeyDown(Keys.Left))
             {
@@ -81,7 +87,7 @@ namespace Ramona.Sprites
                 currentAnimation = "Ramona_run";
                 direction = Direction.Left;
                 position.X -= speed;
-                swing_damage = false;
+                swinging_enemy = false;
             }
            else
                celAnimationManager.PauseAnimation("Ramona_run");
@@ -93,12 +99,12 @@ namespace Ramona.Sprites
                 
                 celAnimationManager.ResumeAnimation("Ramona_Swing");
                 currentAnimation = "Ramona_Swing";
-                swing_damage = false;
+                swinging_enemy = false;
 
             }
 
           else  if (celAnimationManager.GetanimationFrame("Ramona_Swing") >= 3)
-                swing_damage = true;
+                swinging_enemy = true;
 
              if (celAnimationManager.GetanimationFrame("Ramona_Swing") == 7)
             {
@@ -106,18 +112,17 @@ namespace Ramona.Sprites
                 celAnimationManager.PauseAnimation("Ramona_Swing");
                 celAnimationManager.SetanimationFrame("Ramona_Swing", 0);
                 currentAnimation = "Ramona_run";
-                swing_damage = false;
+                swinging_enemy = false;
             }
             if (inputHandler.KeyboardHandler.WasKeyPressed(Keys.Space))
             {
-
                 celAnimationManager.ResumeAnimation("Ramona_Slam");
                 currentAnimation = "Ramona_Slam";
-                swing_damage = false;
-                slam_damage = true;
+                swinging_enemy = false;
+                
             }
-          else  if (celAnimationManager.GetanimationFrame("Ramona_Slam") >= 3)
-                slam_damage = true;
+            else if (celAnimationManager.GetanimationFrame("Ramona_Slam") >= 3)
+                dealing_damage = true;
 
             if (celAnimationManager.GetanimationFrame("Ramona_Slam") == 7)
             {
@@ -125,13 +130,13 @@ namespace Ramona.Sprites
                 celAnimationManager.PauseAnimation("Ramona_Slam");
                 celAnimationManager.SetanimationFrame("Ramona_Slam", 0);
                 currentAnimation = "Ramona_run";
-                slam_damage = false;
+                swinging_enemy = false;
             }
 
-            int celWidth = celAnimationManager.GetAnimationFrameWidth("Ramona_run");
+            
 
-            if (position.X > (Game.GraphicsDevice.Viewport.Width - celWidth))
-                position.X = (Game.GraphicsDevice.Viewport.Width - celWidth);
+            if (position.X > (Game.GraphicsDevice.Viewport.Width - frameWidth))
+                position.X = (Game.GraphicsDevice.Viewport.Width - frameWidth);
             if (position.X < 0)
                 position.X = 0;
 

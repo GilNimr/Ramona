@@ -11,32 +11,27 @@ namespace Ramona.Sprites
 {
     class Ghost : Sprite , ICloneable
     {
-        SpriteBatch spriteBatch;
-
         Player player;
 
-        bool hasdied = false;
+       // bool hasdied = false;
 
-        float timer = 0;
+        
         ICelAnimationManager celAnimationManager;
-        private float ghost_is_swung_timer;
-        private bool life_minus=false;
 
-        public float x_damage_font_position;
-        public float y_damage_font_position;
-        public Vector2 damage_font_position { get { return new Vector2(x_damage_font_position, y_damage_font_position);} }
+        
 
-        public Ghost(Game game , Player _player) : base(game)
+        public Ghost(Game game , Player _player , Random random ) : base(game)
         {
             player = _player;
 
             celAnimationManager = (ICelAnimationManager)game.Services.GetService(typeof(ICelAnimationManager));
-           float y= random.Next(0, Game1.ScreenHeight);
+            
+            float y= random.Next(0, Game1.ScreenHeight);
             float x= random.Next(Game1.ScreenWidth / 2, Game1.ScreenWidth);
             position = new Vector2(x, y);
             speed = 0.5f;
             knockOut_speed = 10;
-            life = 100;
+            life = 30;
 
         }
 
@@ -44,11 +39,11 @@ namespace Ramona.Sprites
         {
             base.Initialize();
         }
-        public void Load(SpriteBatch spriteBatch,SpriteFont _damage)
+     /*   public void Load(SpriteBatch spriteBatch,SpriteFont _damage)
         {
             this.spriteBatch = spriteBatch;
-            damage = _damage;
-        }
+            font_damage = _damage;
+        }*/
 
         protected override void LoadContent()
         {
@@ -63,11 +58,13 @@ namespace Ramona.Sprites
         {
             celAnimationManager.ResumeAnimation("Ghost");
 
+            if(IsTouchingLeft())
+
             if (player.position.X<position.X)
             {
                 
                 direction = Direction.Left;
-                if (!IsTouchingRight(player) && ghost_is_swung_timer == 0)
+                if (!IsTouchingRight(player) && _is_swung_timer == 0)
                 {
                     position.X += -speed;
                     life_minus = false;
@@ -75,18 +72,18 @@ namespace Ramona.Sprites
                 
                 else
                 {
-                    if(player.swing_damage||ghost_is_swung_timer>0)
+                    if(player.swinging_enemy||_is_swung_timer>0)
                     {
-                        if (ghost_is_swung_timer == 0)
+                        if (_is_swung_timer == 0)
                         {
                             x_damage_font_position = position.X;
                             y_damage_font_position = position.Y-50f;
                         }
-                        ghost_is_swung_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if (ghost_is_swung_timer < 1)
+                        _is_swung_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        if (_is_swung_timer < 1)
                             position.X += knockOut_speed;
                         else
-                            ghost_is_swung_timer = 0;
+                            _is_swung_timer = 0;
                         if (!life_minus)
                         {
                             life -= 10;
@@ -99,25 +96,25 @@ namespace Ramona.Sprites
             {
                 
                 direction = Direction.Right;
-                if (!IsTouchingLeft(player) && ghost_is_swung_timer == 0)
+                if (!IsTouchingLeft(player) && _is_swung_timer == 0)
                 { 
                     position.X += +speed;
                 life_minus = false;
                 }
                 else
                 {
-                    if (player.swing_damage || ghost_is_swung_timer > 0)
+                    if (player.swinging_enemy || _is_swung_timer > 0)
                     {
-                        if (ghost_is_swung_timer == 0)
+                        if (_is_swung_timer == 0)
                         {
                             x_damage_font_position = position.X;
                             y_damage_font_position = position.Y-50f;
                         }
-                        ghost_is_swung_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if (ghost_is_swung_timer < 1)
+                        _is_swung_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        if (_is_swung_timer < 1)
                             position.X += -knockOut_speed;
                         else
-                            ghost_is_swung_timer = 0;
+                            _is_swung_timer = 0;
 
                         if (!life_minus)
                         {
@@ -156,9 +153,9 @@ namespace Ramona.Sprites
             if (life_minus)
             {
 
-                spriteBatch.DrawString(damage, "10", damage_font_position, Color.Red);
+                spriteBatch.DrawString(font_damage, "10", damage_font_position, Color.Red);
             }
-                 spriteBatch.End();
+                spriteBatch.End();
         }
 
         public object Clone()
