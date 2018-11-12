@@ -35,18 +35,22 @@ namespace Ramona.Sprites
         {
             base.Initialize();
         }
-        public void Load(SpriteBatch spriteBatch)
+        public void Load(SpriteBatch spriteBatch,SpriteFont _damage)
         {
             this.spriteBatch = spriteBatch;
+            damage = _damage;
         }
 
         protected override void LoadContent()
         {
-            CelCount celCount = new CelCount(7, 1);
+            CelCount celCount = new CelCount(8, 1);
             celAnimationManager.AddAnimation("Ramona_Swing", "Ramona_Swing", celCount, 10);
             celAnimationManager.PauseAnimation("Ramona_Swing");
+            celCount = new CelCount(8, 1);
+            celAnimationManager.AddAnimation("Ramona_Slam", "Ramona_Slam", celCount, 10);
+            celAnimationManager.PauseAnimation("Ramona_Slam");
 
-             celCount = new CelCount(8, 1);
+            celCount = new CelCount(8, 1);
             celAnimationManager.AddAnimation("Ramona_run", "Ramona_run", celCount, 10);
             frameheight = celAnimationManager.GetAnimationFrameHeight("Ramona_run");
             frameWidth = celAnimationManager.GetAnimationFrameWidth("Ramona_run");
@@ -55,11 +59,13 @@ namespace Ramona.Sprites
            
         }
         String currentAnimation = "Ramona_run";
+        public bool swing_damage;
+        public bool slam_damage;
         float swing_time = 0;
 
         public override void Update(GameTime gameTime)
         {
-            swing_time +=(float) gameTime.ElapsedGameTime.TotalSeconds;
+            
 
             if (inputHandler.KeyboardHandler.IsKeyDown(Keys.Right))
             {
@@ -67,6 +73,7 @@ namespace Ramona.Sprites
                 currentAnimation = "Ramona_run";
                 direction = Direction.Right;
                 position.X += speed;
+                swing_damage = false;
             }
             else if (inputHandler.KeyboardHandler.IsKeyDown(Keys.Left))
             {
@@ -74,6 +81,7 @@ namespace Ramona.Sprites
                 currentAnimation = "Ramona_run";
                 direction = Direction.Left;
                 position.X -= speed;
+                swing_damage = false;
             }
            else
                celAnimationManager.PauseAnimation("Ramona_run");
@@ -85,14 +93,39 @@ namespace Ramona.Sprites
                 
                 celAnimationManager.ResumeAnimation("Ramona_Swing");
                 currentAnimation = "Ramona_Swing";
+                swing_damage = false;
 
             }
-          else  if (celAnimationManager.GetanimationFrame("Ramona_Swing") == 6)
+
+          else  if (celAnimationManager.GetanimationFrame("Ramona_Swing") >= 3)
+                swing_damage = true;
+
+             if (celAnimationManager.GetanimationFrame("Ramona_Swing") == 7)
             {
-                
+
                 celAnimationManager.PauseAnimation("Ramona_Swing");
                 celAnimationManager.SetanimationFrame("Ramona_Swing", 0);
                 currentAnimation = "Ramona_run";
+                swing_damage = false;
+            }
+            if (inputHandler.KeyboardHandler.WasKeyPressed(Keys.Space))
+            {
+
+                celAnimationManager.ResumeAnimation("Ramona_Slam");
+                currentAnimation = "Ramona_Slam";
+                swing_damage = false;
+                slam_damage = true;
+            }
+          else  if (celAnimationManager.GetanimationFrame("Ramona_Slam") >= 3)
+                slam_damage = true;
+
+            if (celAnimationManager.GetanimationFrame("Ramona_Slam") == 7)
+            {
+
+                celAnimationManager.PauseAnimation("Ramona_Slam");
+                celAnimationManager.SetanimationFrame("Ramona_Slam", 0);
+                currentAnimation = "Ramona_run";
+                slam_damage = false;
             }
 
             int celWidth = celAnimationManager.GetAnimationFrameWidth("Ramona_run");

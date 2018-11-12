@@ -14,7 +14,7 @@ namespace Ramona
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        public SpriteFont _font;
         private CelAnimationManager celAnimationManager;
 
         private InputHandler inputHandler;
@@ -62,8 +62,10 @@ namespace Ramona
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            player.Load(spriteBatch);
-            ghost.Load(spriteBatch);
+            _font = Content.Load<SpriteFont>("Font");
+
+            player.Load(spriteBatch,_font);
+            ghost.Load(spriteBatch,_font);
         }
 
         protected override void UnloadContent()

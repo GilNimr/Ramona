@@ -19,7 +19,12 @@ namespace Ramona.Sprites
 
         float timer = 0;
         ICelAnimationManager celAnimationManager;
-        
+        private float ghost_is_swung_timer;
+        private bool life_minus=false;
+
+        public float x_damage_font_position;
+        public float y_damage_font_position;
+        public Vector2 damage_font_position { get { return new Vector2(x_damage_font_position, y_damage_font_position);} }
 
         public Ghost(Game game , Player _player) : base(game)
         {
@@ -30,6 +35,7 @@ namespace Ramona.Sprites
             float x= random.Next(Game1.ScreenWidth / 2, Game1.ScreenWidth);
             position = new Vector2(x, y);
             speed = 0.5f;
+            knockOut_speed = 10;
             life = 100;
 
         }
@@ -38,9 +44,10 @@ namespace Ramona.Sprites
         {
             base.Initialize();
         }
-        public void Load(SpriteBatch spriteBatch)
+        public void Load(SpriteBatch spriteBatch,SpriteFont _damage)
         {
             this.spriteBatch = spriteBatch;
+            damage = _damage;
         }
 
         protected override void LoadContent()
@@ -60,30 +67,82 @@ namespace Ramona.Sprites
             {
                 
                 direction = Direction.Left;
-                position.X += -speed;
+                if (!IsTouchingRight(player) && ghost_is_swung_timer == 0)
+                {
+                    position.X += -speed;
+                    life_minus = false;
+                }
+                
+                else
+                {
+                    if(player.swing_damage||ghost_is_swung_timer>0)
+                    {
+                        if (ghost_is_swung_timer == 0)
+                        {
+                            x_damage_font_position = position.X;
+                            y_damage_font_position = position.Y-50f;
+                        }
+                        ghost_is_swung_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        if (ghost_is_swung_timer < 1)
+                            position.X += knockOut_speed;
+                        else
+                            ghost_is_swung_timer = 0;
+                        if (!life_minus)
+                        {
+                            life -= 10;
+                            life_minus = true;
+                        }
+                    }
+                }
             }
             else if (player.position.X > position.X)
             {
                 
                 direction = Direction.Right;
-                position.X += +speed;
+                if (!IsTouchingLeft(player) && ghost_is_swung_timer == 0)
+                { 
+                    position.X += +speed;
+                life_minus = false;
+                }
+                else
+                {
+                    if (player.swing_damage || ghost_is_swung_timer > 0)
+                    {
+                        if (ghost_is_swung_timer == 0)
+                        {
+                            x_damage_font_position = position.X;
+                            y_damage_font_position = position.Y-50f;
+                        }
+                        ghost_is_swung_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        if (ghost_is_swung_timer < 1)
+                            position.X += -knockOut_speed;
+                        else
+                            ghost_is_swung_timer = 0;
+
+                        if (!life_minus)
+                        {
+                            life -= 10;
+                            life_minus = true;
+                        }
+                    }
+                }
             }
             if (player.position.Y < position.Y)
             {
-                
-                
-                position.Y += -speed;
+
+                if (!IsTouchingBottom(player))
+                    position.Y += -speed;
             }
             else if (player.position.Y > position.Y)
             {
-                
-                
+
+               if (!IsTouchingTop(player))
                 position.Y += +speed;
             }
 
-            
+           
 
-            int celWidth = celAnimationManager.GetAnimationFrameWidth("Ghost");
+          //int celWidth = celAnimationManager.GetAnimationFrameWidth("Ghost");
 
             
 
@@ -94,7 +153,12 @@ namespace Ramona.Sprites
         {
             spriteBatch.Begin();
             celAnimationManager.Draw(gameTime, "Ghost", spriteBatch, position, direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
-            spriteBatch.End();
+            if (life_minus)
+            {
+
+                spriteBatch.DrawString(damage, "10", damage_font_position, Color.Red);
+            }
+                 spriteBatch.End();
         }
 
         public object Clone()

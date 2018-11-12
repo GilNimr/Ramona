@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Textures\Ramona_Slam.png" />
     <Content Include="Content\Textures\Ghost.png" />
     <Content Include="Content\Textures\Ramona_run.png" />
     <Content Include="Content\Textures\Ramona_Swing.png" />
@@ -64,12 +65,16 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
+    <None Include="Content\Font.spritefont" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XELibrary\XELibrary.csproj">
       <Project>{623010CD-3E24-4F0E-9EAE-922DAD230975}</Project>
       <Name>XELibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Fonts\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
