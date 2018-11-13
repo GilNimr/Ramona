@@ -32,6 +32,18 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Ghost.png
 
+#begin Textures/Ghost_death.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Ghost_death.png
+
 #begin Textures/Ramona_run.png
 /importer:TextureImporter
 /processor:TextureProcessor

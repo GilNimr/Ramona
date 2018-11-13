@@ -18,6 +18,7 @@ namespace Ramona.Sprites
         
         ICelAnimationManager celAnimationManager;
 
+        float attacking_player=0;
         
 
         public Ghost(Game game , Player _player , Random random ) : base(game)
@@ -52,94 +53,136 @@ namespace Ramona.Sprites
             frameheight = celAnimationManager.GetAnimationFrameHeight("Ghost");
             frameWidth = celAnimationManager.GetAnimationFrameWidth("Ghost");
             celAnimationManager.ToggleAnimation("Ghost");
+
+            celAnimationManager.AddAnimation("Ghost_death", "Ghost_death", celCount, 10);
+            frameheight = celAnimationManager.GetAnimationFrameHeight("Ghost_death");
+            frameWidth = celAnimationManager.GetAnimationFrameWidth("Ghost_death");
+            celAnimationManager.ToggleAnimation("Ghost_death");
         }
 
         public override void Update(GameTime gameTime)
         {
-            celAnimationManager.ResumeAnimation("Ghost");
-
-            
-
-            if (player.position.X<position.X)
+            if (!hasdied)
             {
-                
-                direction = Direction.Left;
-                if (!IsTouchingRight(player) && _is_swung_timer == 0)
+                celAnimationManager.ResumeAnimation("Ghost");
+                if (player.position.X < position.X)
                 {
-                    position.X += -speed;
-                    life_minus = false;
-                }
-                
-                else
-                {
-                    if(player.swinging_enemy||_is_swung_timer>0)
+
+                    direction = Direction.Left;
+                    if (!IsTouchingRight(player) && _is_swung_timer == 0)
                     {
-                        if (_is_swung_timer == 0)
+                       
+                        life_minus = false;
+
+                        if (!IsTouchingRight(Game1.sprites))
                         {
-                            x_damage_font_position = position.X;
-                            y_damage_font_position = position.Y-50f;
+                            position.X += -speed;
+
                         }
-                        _is_swung_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if (_is_swung_timer < 1)
-                            position.X += knockOut_speed;
-                        else
-                            _is_swung_timer = 0;
-                        if (!life_minus)
+                    }
+
+                    else
+                    {
+                        attacking_player +=(float) gameTime.ElapsedGameTime.TotalSeconds;
+
+                        if ((player.swinging_enemy&&player.direction==Direction.Right) || _is_swung_timer > 0)
                         {
-                            life -= 10;
-                            life_minus = true;
+                           
+                            if (_is_swung_timer == 0)
+                            {
+                                x_damage_font_position = position.X;
+                                y_damage_font_position = position.Y - 50f;
+                            }
+                            _is_swung_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            if (_is_swung_timer < 1)
+                                position.X += knockOut_speed;
+                            else
+                                _is_swung_timer = 0;
+                            if (!life_minus)
+                            {
+                                damage_to_life = 10;
+                                life -= damage_to_life;
+                                life_minus = true;
+                            }
+                        }
+                        else if(attacking_player>0.5)
+                        {
+                            attacking_player = 0;
+                            player.damage_to_life = 2;
+                            player.life -= player.damage_to_life;
+                           player. player_hit = true;
                         }
                     }
                 }
-            }
-            else if (player.position.X > position.X)
-            {
-                
-                direction = Direction.Right;
-                if (!IsTouchingLeft(player) && _is_swung_timer == 0)
-                { 
-                    position.X += +speed;
-                life_minus = false;
-                }
-                else
+                else if (player.position.X > position.X)
                 {
-                    if (player.swinging_enemy || _is_swung_timer > 0)
-                    {
-                        if (_is_swung_timer == 0)
-                        {
-                            x_damage_font_position = position.X;
-                            y_damage_font_position = position.Y-50f;
-                        }
-                        _is_swung_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if (_is_swung_timer < 1)
-                            position.X += -knockOut_speed;
-                        else
-                            _is_swung_timer = 0;
 
-                        if (!life_minus)
+                    direction = Direction.Right;
+                    if (!IsTouchingLeft(player) && _is_swung_timer == 0)
+                    {
+                       
+                        life_minus = false;
+
+                        if (!IsTouchingLeft(Game1.sprites))
                         {
-                            life -= 10;
-                            life_minus = true;
+                            position.X += speed;
+
+                        }
+                    }
+                    else
+                    {
+                        attacking_player += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        if ((player.swinging_enemy && player.direction == Direction.Left) || _is_swung_timer > 0)
+                        {
+                         
+                            if (_is_swung_timer == 0)
+                            {
+                                x_damage_font_position = position.X;
+                                y_damage_font_position = position.Y - 50f;
+                            }
+                            _is_swung_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            if (_is_swung_timer < 1)
+                                position.X += -knockOut_speed;
+                            else
+                                _is_swung_timer = 0;
+
+                            if (!life_minus)
+                            {
+                                damage_to_life = 10;
+                                life -= damage_to_life;
+                                life_minus = true;
+                            }
+                        }
+                        else if (attacking_player > 0.5&&!player.player_hit)
+                        {
+                            attacking_player = 0;
+                            player.damage_to_life = 2;
+                            player.life -= player.damage_to_life;
+                          player.  player_hit = true;
+                            
                         }
                     }
                 }
+                if (player.position.Y < position.Y)
+                {
+
+                    if (!IsTouchingBottom(Game1.sprites))
+                        position.Y += -speed;
+                }
+                else if (player.position.Y > position.Y)
+                {
+
+                    if (!IsTouchingTop(Game1.sprites))
+                        position.Y += +speed;
+                }
             }
-            if (player.position.Y < position.Y)
+            if (life <= 0)
             {
-
-                if (!IsTouchingBottom(player))
-                    position.Y += -speed;
-            }
-            else if (player.position.Y > position.Y)
-            {
-
-               if (!IsTouchingTop(player))
-                position.Y += +speed;
+                hasdied = true;
+                death_on_screen +=(float) gameTime.ElapsedGameTime.TotalSeconds;
             }
 
-           
-
-          //int celWidth = celAnimationManager.GetAnimationFrameWidth("Ghost");
+          
 
             
 
@@ -149,13 +192,16 @@ namespace Ramona.Sprites
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
+            if(!hasdied)
             celAnimationManager.Draw(gameTime, "Ghost", spriteBatch, position, direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
+            else
+                celAnimationManager.Draw(gameTime, "Ghost_death", spriteBatch, position, direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
             if (life_minus)
             {
-
-                spriteBatch.DrawString(font_damage, "10", damage_font_position, Color.Red);
+                spriteBatch.DrawString(font_damage, damage_to_life.ToString(), Damage_font_position, Color.Red);
             }
-                spriteBatch.End();
+         
+            spriteBatch.End();
         }
 
         public object Clone()

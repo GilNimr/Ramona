@@ -15,7 +15,8 @@ namespace Ramona.Sprites
 
 
         //SpriteBatch spriteBatch;
-
+        public bool player_hit;
+        private float player_hit_timer;
         public bool swinging_enemy;
         public bool dealing_damage;
 
@@ -67,11 +68,27 @@ namespace Ramona.Sprites
 
         String currentAnimation = "Ramona_run";
         
-       // float swing_time = 0;
+
+        // float swing_time = 0;
 
         public override void Update(GameTime gameTime)
         {
-            
+            if (player_hit)
+            {
+                
+                if(player_hit_timer==0)
+                {
+                    x_damage_font_position = position.X;
+                    y_damage_font_position = position.Y;
+                }
+                player_hit_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (player_hit_timer >= 1)
+                {
+                    player_hit_timer = 0;
+                    player_hit = false;
+                }
+            }
 
             if (inputHandler.KeyboardHandler.IsKeyDown(Keys.Right))
             {
@@ -147,6 +164,10 @@ namespace Ramona.Sprites
         {
             spriteBatch.Begin();
             celAnimationManager.Draw(gameTime, currentAnimation, spriteBatch, position, direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
+            if (player_hit&&player_hit_timer<1)
+            {
+                spriteBatch.DrawString(font_damage, damage_to_life.ToString(), Damage_font_position, Color.DarkRed);
+            }
             spriteBatch.End();
         }
     }

@@ -16,7 +16,7 @@ namespace Ramona.Sprites
         public SpriteFont font_damage;
         public float x_damage_font_position;
         public float y_damage_font_position;
-        public Vector2 damage_font_position { get { return new Vector2(x_damage_font_position, y_damage_font_position); } }
+        public Vector2 Damage_font_position {get { return new Vector2(x_damage_font_position, y_damage_font_position); } }
 
         public Vector2 position;
         public float speed;
@@ -24,22 +24,25 @@ namespace Ramona.Sprites
         protected float _is_swung_timer;
         protected bool life_minus = false;
 
-        public enum Direction { Left,Right};
+        public enum Direction { Left, Right };
         public Direction direction = Direction.Right;
 
         public Texture2D texture;
         public int frameWidth;
         public int frameheight;
-       
+
         public int life;
+        public bool hasdied=false;
+        public int damage_to_life;
+        public float death_on_screen = 0;
 
-        
 
 
-        public Sprite(Game game )
-            :base(game)
+
+        public Sprite(Game game)
+            : base(game)
         {
-            
+
 
         }
 
@@ -47,7 +50,7 @@ namespace Ramona.Sprites
         {
             get
             {
-                return new Rectangle((int)position.X, (int)position.Y, frameWidth,frameheight);
+                return new Rectangle((int)position.X, (int)position.Y, frameWidth, frameheight);
             }
         }
         public override void Initialize()
@@ -62,14 +65,15 @@ namespace Ramona.Sprites
         }
 
         #region Colloision
-        protected bool IsTouchingLeft(Sprite sprite)
+        protected bool IsTouchingLeft(Sprite sprite)  
         {
             return this.Rectangle.Right + this.speed > sprite.Rectangle.Left &&
-              this.Rectangle.Left < sprite.Rectangle.Left &&
-              this.Rectangle.Bottom > sprite.Rectangle.Top &&
-              this.Rectangle.Top < sprite.Rectangle.Bottom;
+              this.Rectangle.Left<sprite.Rectangle.Left &&
+              this.Rectangle.Bottom> sprite.Rectangle.Top &&
+              this.Rectangle.Top<sprite.Rectangle.Bottom;
         }
-
+    
+    
         protected bool IsTouchingRight(Sprite sprite)
         {
             return this.Rectangle.Left + this.speed < sprite.Rectangle.Right &&
@@ -94,6 +98,58 @@ namespace Ramona.Sprites
               this.Rectangle.Left < sprite.Rectangle.Right;
         }
 
+        protected bool IsTouchingLeft(List<Sprite> sprites)
+        {
+            foreach(Sprite sprite in sprites) {
+                if (this.Rectangle.Right + this.speed > sprite.Rectangle.Left &&
+                  this.Rectangle.Left < sprite.Rectangle.Left &&
+                  this.Rectangle.Bottom > sprite.Rectangle.Top &&
+                  this.Rectangle.Top < sprite.Rectangle.Bottom)
+                    return true;
+
+            }
+            return false;
+        }
+
+
+        protected bool IsTouchingRight(List<Sprite> sprites)
+        {
+            foreach (Sprite sprite in sprites)
+            {
+                if (this.Rectangle.Left + this.speed < sprite.Rectangle.Right &&
+              this.Rectangle.Right > sprite.Rectangle.Right &&
+              this.Rectangle.Bottom > sprite.Rectangle.Top &&
+              this.Rectangle.Top < sprite.Rectangle.Bottom)
+                    return true;
+            }
+            return false;
+            }
+
+        protected bool IsTouchingTop(List<Sprite> sprites)
+        {
+            foreach (Sprite sprite in sprites)
+            {
+                if (this.Rectangle.Bottom + this.speed > sprite.Rectangle.Top &&
+              this.Rectangle.Top < sprite.Rectangle.Top &&
+              this.Rectangle.Right > sprite.Rectangle.Left &&
+              this.Rectangle.Left < sprite.Rectangle.Right)
+                    return true;
+            }
+            return false;
+        }
+
+        protected bool IsTouchingBottom(List<Sprite> sprites)
+        {
+                foreach (Sprite sprite in sprites)
+                {
+                    if (this.Rectangle.Top + this.speed < sprite.Rectangle.Bottom &&
+              this.Rectangle.Bottom > sprite.Rectangle.Bottom &&
+              this.Rectangle.Right > sprite.Rectangle.Left &&
+              this.Rectangle.Left < sprite.Rectangle.Right)
+                        return true;
+                }
+                return false;
+            }
         #endregion
 
         public virtual void Update(GameTime gameTime, List<Sprite> sprites)

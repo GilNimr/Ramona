@@ -27,7 +27,7 @@ namespace Ramona
         private Player player;
      
         
-        public List<Sprite> sprites;
+        public static List<Sprite> sprites;
 
         public static int ScreenWidth;
         public static int ScreenHeight;
@@ -102,6 +102,15 @@ namespace Ramona
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+            for(int i=0; i< sprites.Count;i++)
+            {
+                if (sprites[i].death_on_screen > 3)
+                {
+                    Components.Remove(sprites[i]);
+                    sprites.RemoveAt(i);
+                    i--;
+                }
+            }
 
             base.Update(gameTime);
         }
