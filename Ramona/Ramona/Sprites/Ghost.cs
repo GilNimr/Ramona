@@ -58,7 +58,7 @@ namespace Ramona.Sprites
         {
             celAnimationManager.ResumeAnimation("Ghost");
 
-            if(IsTouchingLeft())
+            
 
             if (player.position.X<position.X)
             {

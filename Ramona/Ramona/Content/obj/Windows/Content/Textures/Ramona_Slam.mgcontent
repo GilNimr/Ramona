@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/slonim/source/repos/Ramona/Ramona/Content/Textures/Ramona_Slam.png</SourceFile>
+  <SourceFile>C:/CoolProject/Ramona/Ramona/Content/Textures/Ramona_Slam.png</SourceFile>
   <SourceTime>2018-11-12T00:45:41.6209928+02:00</SourceTime>
-  <DestFile>C:/Users/slonim/source/repos/Ramona/Ramona/Content/bin/Windows/Content/Textures/Ramona_Slam.xnb</DestFile>
-  <DestTime>2018-11-12T00:45:47.3335254+02:00</DestTime>
+  <DestFile>C:/CoolProject/Ramona/Ramona/Content/bin/Windows/Content/Textures/Ramona_Slam.xnb</DestFile>
+  <DestTime>2018-11-13T19:10:33.6105276+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-09-24T00:55:52+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

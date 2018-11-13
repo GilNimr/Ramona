@@ -29,3 +29,7 @@ C:\Users\slonim\source\repos\Ramona\Ramona\obj\x86\Debug\Ramona.csproj.CoreCompi
 C:\Users\slonim\source\repos\Ramona\Ramona\obj\x86\Debug\Ramona.csproj.CopyComplete
 C:\Users\slonim\source\repos\Ramona\Ramona\obj\x86\Debug\Ramona.exe
 C:\Users\slonim\source\repos\Ramona\Ramona\obj\x86\Debug\Ramona.pdb
+C:\CoolProject\Ramona\Ramona\obj\x86\Debug\Ramona.csprojAssemblyReference.cache
+C:\CoolProject\Ramona\Ramona\obj\x86\Debug\Ramona.csproj.CoreCompileInputs.cache
+C:\CoolProject\Ramona\Ramona\obj\x86\Debug\Ramona.exe
+C:\CoolProject\Ramona\Ramona\obj\x86\Debug\Ramona.pdb
