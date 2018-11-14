@@ -26,8 +26,8 @@ namespace Ramona
         Random random;
 
         private Player player;
-     
-        
+
+
         public List<Sprite> sprites;
 
         public static int ScreenWidth;
@@ -58,8 +58,8 @@ namespace Ramona
 
 
             player = new Player(this);
-          
-            
+
+
             sprites = new List<Sprite>()
             {
                 new Ghost(this,player,random),
@@ -72,14 +72,14 @@ namespace Ramona
                 new Ghost(this,player,random),
                 player
             };
-            
-            foreach(Sprite sprite in sprites)
+
+            foreach (Sprite sprite in sprites)
             {
                 Components.Add(sprite);
-                
+
             }
-            
-            
+
+
         }
 
         protected override void Initialize()
@@ -92,15 +92,15 @@ namespace Ramona
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font_damage = Content.Load<SpriteFont>("Font");
 
-            scrollingBackgroundManager.AddBackground("street", "Street", new Vector2(0, 0), new Rectangle(0, 0, 1600, 600), 10, 0.5f, Color.White);
-            scrollingBackgroundManager.AddBackground("road", "Road", new Vector2(0, 390), new Rectangle(0, 0, 1600, 600), 100, 0.1f, Color.White);
+            scrollingBackgroundManager.AddBackground("street", "Street", new Vector2(0, 0), new Rectangle(0, 0, 1065, 392), 10, 0.5f, Color.White);
+            scrollingBackgroundManager.AddBackground("road", "Road", new Vector2(0, 390), new Rectangle(0, 0, 1066, 356), 100, 0.1f, Color.White);
 
 
             foreach (Sprite sprite in sprites)
             {
                 sprite.Load(spriteBatch, font_damage);
             }
-           
+
         }
 
         protected override void UnloadContent()
@@ -130,12 +130,14 @@ namespace Ramona
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
+            
             scrollingBackgroundManager.Draw("street", spriteBatch);
             scrollingBackgroundManager.Draw("road", spriteBatch);
-            
 
-            base.Draw(gameTime);
+
+           
             spriteBatch.End();
+            base.Draw(gameTime);
         }
     }
 }

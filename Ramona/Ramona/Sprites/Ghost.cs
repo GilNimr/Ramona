@@ -148,14 +148,14 @@ namespace Ramona.Sprites
 
         public override void Draw(GameTime gameTime)
         {
-           // spriteBatch.Begin();
+            spriteBatch.Begin();
             celAnimationManager.Draw(gameTime, "Ghost", spriteBatch, position, direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
             if (life_minus)
             {
 
                 spriteBatch.DrawString(font_damage, "10", damage_font_position, Color.Red);
             }
-             //   spriteBatch.End();
+                spriteBatch.End();
         }
 
         public object Clone()

@@ -93,8 +93,8 @@ namespace Ramona.Sprites
                 position.X -= speed;
                 swinging_enemy = false;
 
-                if (position.X < 20)
-                    position.X = 20;
+           /*     if (position.X < 20)
+                    position.X = 20;*/
             }
             else if (inputHandler.KeyboardHandler.IsKeyDown(Keys.Up))
             {
@@ -166,17 +166,17 @@ namespace Ramona.Sprites
 
             if (position.X > (Game.GraphicsDevice.Viewport.Width - frameWidth))
                 position.X = (Game.GraphicsDevice.Viewport.Width - frameWidth);
-            if (position.X < 0)
+            if (position.X <= 0)
                 position.X = 0;
-
+                
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-        //    spriteBatch.Begin();
+            spriteBatch.Begin();
             celAnimationManager.Draw(gameTime, currentAnimation, spriteBatch, position, direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
-          //  spriteBatch.End();
+            spriteBatch.End();
         }
     }
 }

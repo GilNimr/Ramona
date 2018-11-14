@@ -103,9 +103,9 @@ namespace Ramona.Sprites
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-          // spriteBatch.Begin();
+           spriteBatch.Begin();
             spriteBatch.Draw(texture, position, Color.White);
-           // spriteBatch.End();
+           spriteBatch.End();
         }
 
 

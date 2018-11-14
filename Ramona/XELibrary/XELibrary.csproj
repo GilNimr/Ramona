@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{623010CD-3E24-4F0E-9EAE-922DAD230975}</ProjectGuid>
+    <ProjectGuid>{12B7D8AC-D8AE-4BBD-9651-807509447AA2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>XELibrary</RootNamespace>
