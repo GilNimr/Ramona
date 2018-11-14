@@ -57,10 +57,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Textures\Ramona_Slam.png" />
-<<<<<<< HEAD
-    <Content Include="Content\Textures\Ghost.png" />
-=======
->>>>>>> master
     <Content Include="Content\Textures\Ramona_run.png" />
     <Content Include="Content\Textures\Ramona_Swing.png" />
     <Content Include="Icon.ico" />
