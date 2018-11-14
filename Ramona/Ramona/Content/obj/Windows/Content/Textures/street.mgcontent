@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/slonim/Desktop/Ramona-master/Ramona/Ramona/Content/Textures/street.png</SourceFile>
-  <SourceTime>2018-11-14T13:51:23.0845463+02:00</SourceTime>
-  <DestFile>C:/Users/slonim/Desktop/Ramona-master/Ramona/Ramona/Content/bin/Windows/Content/Textures/street.xnb</DestFile>
-  <DestTime>2018-11-14T14:47:54.9907377+02:00</DestTime>
+  <SourceFile>C:/CoolProject/Ramona/Ramona/Content/Textures/street.png</SourceFile>
+  <SourceTime>2018-11-14T14:58:38.5101372+02:00</SourceTime>
+  <DestFile>C:/CoolProject/Ramona/Ramona/Content/bin/Windows/Content/Textures/street.xnb</DestFile>
+  <DestTime>2018-11-14T14:59:51.0721688+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-09-24T00:55:52+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
