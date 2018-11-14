@@ -40,6 +40,7 @@ C:\Users\slonim\source\repos\Ramona\XELibrary\obj\Debug\XELibrary.csproj.CoreCom
 C:\Users\slonim\source\repos\Ramona\XELibrary\obj\Debug\XELibrary.csproj.CopyComplete
 C:\Users\slonim\source\repos\Ramona\XELibrary\obj\Debug\XELibrary.dll
 C:\Users\slonim\source\repos\Ramona\XELibrary\obj\Debug\XELibrary.pdb
+<<<<<<< HEAD
 C:\Users\shach\source\repos\Ramona\Ramona\XELibrary\bin\Debug\XELibrary.dll
 C:\Users\shach\source\repos\Ramona\Ramona\XELibrary\bin\Debug\XELibrary.pdb
 C:\Users\shach\source\repos\Ramona\Ramona\XELibrary\bin\Debug\MonoGame.Framework.dll
@@ -61,3 +62,5 @@ C:\Users\shach\source\repos\Ramona\Ramona\XELibrary\obj\Debug\XELibrary.csproj.C
 C:\Users\shach\source\repos\Ramona\Ramona\XELibrary\obj\Debug\XELibrary.csproj.CopyComplete
 C:\Users\shach\source\repos\Ramona\Ramona\XELibrary\obj\Debug\XELibrary.dll
 C:\Users\shach\source\repos\Ramona\Ramona\XELibrary\obj\Debug\XELibrary.pdb
+=======
+>>>>>>> master
