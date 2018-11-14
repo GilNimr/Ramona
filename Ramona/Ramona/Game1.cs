@@ -15,15 +15,14 @@ namespace Ramona
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-<<<<<<< HEAD
+
         ScrollingBackgroundManager scrollingBackgroundManager;
 
-        public SpriteFont font_damage;
-=======
+
 
         public SpriteFont font_damage;
         public SpriteFont font_life;
->>>>>>> master
+
 
         private CelAnimationManager celAnimationManager;
 
@@ -32,15 +31,11 @@ namespace Ramona
         Random random;
 
         private Player player;
-<<<<<<< HEAD
 
-
-        public List<Sprite> sprites;
-=======
      
         
         public static List<Sprite> sprites;
->>>>>>> master
+
 
         public static int ScreenWidth;
         public static int ScreenHeight;
@@ -52,13 +47,13 @@ namespace Ramona
             graphics.PreferredBackBufferWidth = 1000;
             graphics.PreferredBackBufferHeight = 600;
 
-<<<<<<< HEAD
+
             scrollingBackgroundManager = new ScrollingBackgroundManager(this, "Textures\\");
             Components.Add(scrollingBackgroundManager);
 
 
-=======
->>>>>>> master
+
+
             ScreenWidth = graphics.PreferredBackBufferWidth;
             ScreenHeight = graphics.PreferredBackBufferHeight;
 
@@ -73,36 +68,13 @@ namespace Ramona
 
 
             player = new Player(this);
-<<<<<<< HEAD
 
-
-=======
-          
-            
->>>>>>> master
             sprites = new List<Sprite>()
             {
                 new Ghost(this,player,random),
                 new Ghost(this,player,random),
                 new Ghost(this,player,random),
                 new Ghost(this,player,random),
-<<<<<<< HEAD
-                new Ghost(this,player,random),
-                new Ghost(this,player,random),
-                new Ghost(this,player,random),
-                new Ghost(this,player,random),
-                player
-            };
-
-            foreach (Sprite sprite in sprites)
-            {
-                Components.Add(sprite);
-
-            }
-
-
-=======
-
                 player
             };
             
@@ -113,7 +85,7 @@ namespace Ramona
             }
             
             
->>>>>>> master
+
         }
 
         protected override void Initialize()
@@ -125,26 +97,20 @@ namespace Ramona
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font_damage = Content.Load<SpriteFont>("Font");
-<<<<<<< HEAD
+
 
             scrollingBackgroundManager.AddBackground("street", "Street", new Vector2(0, 0), new Rectangle(0, 0, 1065, 392), 10, 0.5f, Color.White);
             scrollingBackgroundManager.AddBackground("road", "Road", new Vector2(0, 390), new Rectangle(0, 0, 1066, 356), 100, 0.1f, Color.White);
 
 
-            foreach (Sprite sprite in sprites)
-            {
-                sprite.Load(spriteBatch, font_damage);
-            }
-
-=======
-            font_life = Content.Load<SpriteFont>("Font");
+    font_life = Content.Load<SpriteFont>("Font");
 
             foreach (Sprite sprite in sprites)
             {
                 sprite.Load(spriteBatch, font_damage,font_life);
             }
            
->>>>>>> master
+
         }
 
         protected override void UnloadContent()
@@ -155,7 +121,7 @@ namespace Ramona
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-<<<<<<< HEAD
+
 
             if (inputHandler.KeyboardHandler.IsKeyDown(Keys.Right) && player.position.X >= (graphics.GraphicsDevice.Viewport.Width / 2.0f))
                 scrollingBackgroundManager.ScrollRate = -2.0f;
@@ -166,7 +132,7 @@ namespace Ramona
             else
                 scrollingBackgroundManager.ScrollRate = 0.0f;
 
-=======
+
             for(int i=0; i< sprites.Count;i++)
             {
                 if (sprites[i].death_on_screen > 3)
@@ -176,7 +142,7 @@ namespace Ramona
                     i--;
                 }
             }
->>>>>>> master
+
 
             base.Update(gameTime);
         }
@@ -185,7 +151,7 @@ namespace Ramona
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-<<<<<<< HEAD
+
             spriteBatch.Begin();
             
             scrollingBackgroundManager.Draw("street", spriteBatch);
@@ -194,8 +160,7 @@ namespace Ramona
 
            
             spriteBatch.End();
-=======
->>>>>>> master
+
             base.Draw(gameTime);
         }
     }

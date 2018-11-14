@@ -18,10 +18,9 @@ namespace Ramona.Sprites
         
         ICelAnimationManager celAnimationManager;
 
-<<<<<<< HEAD
-=======
+
         float attacking_player=0;
->>>>>>> master
+
         
 
         public Ghost(Game game , Player _player , Random random ) : base(game)
@@ -52,12 +51,7 @@ namespace Ramona.Sprites
         protected override void LoadContent()
         {
             CelCount celCount = new CelCount(3, 1);
-<<<<<<< HEAD
-            celAnimationManager.AddAnimation("Ghost", "Ghost", celCount, 10);
-            frameheight = celAnimationManager.GetAnimationFrameHeight("Ghost");
-            frameWidth = celAnimationManager.GetAnimationFrameWidth("Ghost");
-            celAnimationManager.ToggleAnimation("Ghost");
-=======
+
             celAnimationManager.AddAnimation("my_ghost", "my_ghost", celCount, 10);
             frameheight = celAnimationManager.GetAnimationFrameHeight("my_ghost");
             frameWidth = celAnimationManager.GetAnimationFrameWidth("my_ghost");
@@ -67,97 +61,12 @@ namespace Ramona.Sprites
             frameheight = celAnimationManager.GetAnimationFrameHeight("Ghost_death");
             frameWidth = celAnimationManager.GetAnimationFrameWidth("Ghost_death");
             celAnimationManager.ToggleAnimation("Ghost_death");
->>>>>>> master
+
         }
 
         public override void Update(GameTime gameTime)
         {
-<<<<<<< HEAD
-            celAnimationManager.ResumeAnimation("Ghost");
 
-         //   if(IsTouchingLeft())
-
-            if (player.position.X<position.X)
-            {
-                
-                direction = Direction.Left;
-                if (!IsTouchingRight(player) && _is_swung_timer == 0)
-                {
-                    position.X += -speed;
-                    life_minus = false;
-                }
-                
-                else
-                {
-                    if(player.swinging_enemy||_is_swung_timer>0)
-                    {
-                        if (_is_swung_timer == 0)
-                        {
-                            x_damage_font_position = position.X;
-                            y_damage_font_position = position.Y-50f;
-                        }
-                        _is_swung_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if (_is_swung_timer < 1)
-                            position.X += knockOut_speed;
-                        else
-                            _is_swung_timer = 0;
-                        if (!life_minus)
-                        {
-                            life -= 10;
-                            life_minus = true;
-                        }
-                    }
-                }
-            }
-            else if (player.position.X > position.X)
-            {
-                
-                direction = Direction.Right;
-                if (!IsTouchingLeft(player) && _is_swung_timer == 0)
-                { 
-                    position.X += +speed;
-                life_minus = false;
-                }
-                else
-                {
-                    if (player.swinging_enemy || _is_swung_timer > 0)
-                    {
-                        if (_is_swung_timer == 0)
-                        {
-                            x_damage_font_position = position.X;
-                            y_damage_font_position = position.Y-50f;
-                        }
-                        _is_swung_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if (_is_swung_timer < 1)
-                            position.X += -knockOut_speed;
-                        else
-                            _is_swung_timer = 0;
-
-                        if (!life_minus)
-                        {
-                            life -= 10;
-                            life_minus = true;
-                        }
-                    }
-                }
-            }
-            if (player.position.Y < position.Y)
-            {
-
-                if (!IsTouchingBottom(player))
-                    position.Y += -speed;
-            }
-            else if (player.position.Y > position.Y)
-            {
-
-               if (!IsTouchingTop(player))
-                position.Y += +speed;
-            }
-
-           
-
-          //int celWidth = celAnimationManager.GetAnimationFrameWidth("Ghost");
-=======
             if (!hasdied)
             {
                 celAnimationManager.ResumeAnimation("my_ghost");
@@ -279,7 +188,7 @@ namespace Ramona.Sprites
             }
 
           
->>>>>>> master
+
 
             
 
@@ -289,15 +198,7 @@ namespace Ramona.Sprites
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
-<<<<<<< HEAD
-            celAnimationManager.Draw(gameTime, "Ghost", spriteBatch, position, direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
-            if (life_minus)
-            {
 
-                spriteBatch.DrawString(font_damage, "10", damage_font_position, Color.Red);
-            }
-                spriteBatch.End();
-=======
             if(!hasdied)
             celAnimationManager.Draw(gameTime, "my_ghost", spriteBatch, position, direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
             else
@@ -308,7 +209,7 @@ namespace Ramona.Sprites
             }
          
             spriteBatch.End();
->>>>>>> master
+
         }
 
         public object Clone()
