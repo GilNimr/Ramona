@@ -73,96 +73,104 @@ namespace Ramona.Sprites
 
         public override void Update(GameTime gameTime)
         {
-            if (player_hit)
+            if(life<0)
             {
-                
-                if(player_hit_timer==0)
+                hasdied = true;
+            }
+            if (!hasdied)
+            {
+                if (player_hit)
                 {
-                    x_damage_font_position = position.X;
-                    y_damage_font_position = position.Y;
-                }
-                player_hit_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (player_hit_timer >= 1)
+                    if (player_hit_timer == 0)
+                    {
+                        x_damage_font_position = position.X;
+                        y_damage_font_position = position.Y;
+                    }
+                    player_hit_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    if (player_hit_timer >= 1)
+                    {
+                        player_hit_timer = 0;
+                        player_hit = false;
+                    }
+                }
+
+                if (inputHandler.KeyboardHandler.IsKeyDown(Keys.Right))
                 {
-                    player_hit_timer = 0;
-                    player_hit = false;
+                    celAnimationManager.ResumeAnimation("Ramona_run");
+                    currentAnimation = "Ramona_run";
+                    direction = Direction.Right;
+                    position.X += speed;
+                    swinging_enemy = false;
                 }
+                else if (inputHandler.KeyboardHandler.IsKeyDown(Keys.Left))
+                {
+                    celAnimationManager.ResumeAnimation("Ramona_run");
+                    currentAnimation = "Ramona_run";
+                    direction = Direction.Left;
+                    position.X -= speed;
+                    swinging_enemy = false;
+                }
+                else
+                    celAnimationManager.PauseAnimation("Ramona_run");
+
+
+
+                if (inputHandler.KeyboardHandler.WasKeyPressed(Keys.Enter))
+                {
+
+                    celAnimationManager.ResumeAnimation("Ramona_Swing");
+                    currentAnimation = "Ramona_Swing";
+                    swinging_enemy = false;
+
+                }
+
+                else if (celAnimationManager.GetanimationFrame("Ramona_Swing") >= 3)
+                    swinging_enemy = true;
+
+                if (celAnimationManager.GetanimationFrame("Ramona_Swing") == 7)
+                {
+
+                    celAnimationManager.PauseAnimation("Ramona_Swing");
+                    celAnimationManager.SetanimationFrame("Ramona_Swing", 0);
+                    currentAnimation = "Ramona_run";
+                    swinging_enemy = false;
+                }
+                if (inputHandler.KeyboardHandler.WasKeyPressed(Keys.Space))
+                {
+                    celAnimationManager.ResumeAnimation("Ramona_Slam");
+                    currentAnimation = "Ramona_Slam";
+                    swinging_enemy = false;
+
+                }
+                else if (celAnimationManager.GetanimationFrame("Ramona_Slam") >= 3)
+                    dealing_damage = true;
+
+                if (celAnimationManager.GetanimationFrame("Ramona_Slam") == 7)
+                {
+
+                    celAnimationManager.PauseAnimation("Ramona_Slam");
+                    celAnimationManager.SetanimationFrame("Ramona_Slam", 0);
+                    currentAnimation = "Ramona_run";
+                    swinging_enemy = false;
+                }
+
+
+
+                if (position.X > (Game.GraphicsDevice.Viewport.Width - frameWidth))
+                    position.X = (Game.GraphicsDevice.Viewport.Width - frameWidth);
+                if (position.X < 0)
+                    position.X = 0;
             }
-
-            if (inputHandler.KeyboardHandler.IsKeyDown(Keys.Right))
-            {
-                celAnimationManager.ResumeAnimation("Ramona_run");
-                currentAnimation = "Ramona_run";
-                direction = Direction.Right;
-                position.X += speed;
-                swinging_enemy = false;
-            }
-            else if (inputHandler.KeyboardHandler.IsKeyDown(Keys.Left))
-            {
-                celAnimationManager.ResumeAnimation("Ramona_run");
-                currentAnimation = "Ramona_run";
-                direction = Direction.Left;
-                position.X -= speed;
-                swinging_enemy = false;
-            }
-           else
-               celAnimationManager.PauseAnimation("Ramona_run");
-
-            
-
-           if (inputHandler.KeyboardHandler.WasKeyPressed(Keys.Enter))
-            {
-                
-                celAnimationManager.ResumeAnimation("Ramona_Swing");
-                currentAnimation = "Ramona_Swing";
-                swinging_enemy = false;
-
-            }
-
-          else  if (celAnimationManager.GetanimationFrame("Ramona_Swing") >= 3)
-                swinging_enemy = true;
-
-             if (celAnimationManager.GetanimationFrame("Ramona_Swing") == 7)
-            {
-
-                celAnimationManager.PauseAnimation("Ramona_Swing");
-                celAnimationManager.SetanimationFrame("Ramona_Swing", 0);
-                currentAnimation = "Ramona_run";
-                swinging_enemy = false;
-            }
-            if (inputHandler.KeyboardHandler.WasKeyPressed(Keys.Space))
-            {
-                celAnimationManager.ResumeAnimation("Ramona_Slam");
-                currentAnimation = "Ramona_Slam";
-                swinging_enemy = false;
-                
-            }
-            else if (celAnimationManager.GetanimationFrame("Ramona_Slam") >= 3)
-                dealing_damage = true;
-
-            if (celAnimationManager.GetanimationFrame("Ramona_Slam") == 7)
-            {
-
-                celAnimationManager.PauseAnimation("Ramona_Slam");
-                celAnimationManager.SetanimationFrame("Ramona_Slam", 0);
-                currentAnimation = "Ramona_run";
-                swinging_enemy = false;
-            }
-
-            
-
-            if (position.X > (Game.GraphicsDevice.Viewport.Width - frameWidth))
-                position.X = (Game.GraphicsDevice.Viewport.Width - frameWidth);
-            if (position.X < 0)
-                position.X = 0;
-
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
+            spriteBatch.DrawString(font_life,"life: "+ life.ToString(), new Vector2(50,50), Color.DarkRed);
+
             celAnimationManager.Draw(gameTime, currentAnimation, spriteBatch, position, direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
             if (player_hit&&player_hit_timer<1)
             {

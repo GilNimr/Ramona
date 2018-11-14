@@ -14,6 +14,7 @@ namespace Ramona.Sprites
         protected SpriteBatch spriteBatch;
 
         public SpriteFont font_damage;
+        public SpriteFont font_life;
         public float x_damage_font_position;
         public float y_damage_font_position;
         public Vector2 Damage_font_position {get { return new Vector2(x_damage_font_position, y_damage_font_position); } }
@@ -58,16 +59,17 @@ namespace Ramona.Sprites
             base.Initialize();
         }
 
-        public void Load(SpriteBatch spriteBatch, SpriteFont _damage)
+        public void Load(SpriteBatch spriteBatch, SpriteFont _damage, SpriteFont _life)
         {
             this.spriteBatch = spriteBatch;
             font_damage = _damage;
+            font_life = _life;
         }
 
         #region Colloision
         protected bool IsTouchingLeft(Sprite sprite)  
         {
-            return this.Rectangle.Right + this.speed > sprite.Rectangle.Left &&
+            return this.Rectangle.Right + this.speed*3 > sprite.Rectangle.Left &&
               this.Rectangle.Left<sprite.Rectangle.Left &&
               this.Rectangle.Bottom> sprite.Rectangle.Top &&
               this.Rectangle.Top<sprite.Rectangle.Bottom;
@@ -76,7 +78,7 @@ namespace Ramona.Sprites
     
         protected bool IsTouchingRight(Sprite sprite)
         {
-            return this.Rectangle.Left + this.speed < sprite.Rectangle.Right &&
+            return this.Rectangle.Left - this.speed*3 < sprite.Rectangle.Right &&
               this.Rectangle.Right > sprite.Rectangle.Right &&
               this.Rectangle.Bottom > sprite.Rectangle.Top &&
               this.Rectangle.Top < sprite.Rectangle.Bottom;

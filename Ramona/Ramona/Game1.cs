@@ -17,6 +17,7 @@ namespace Ramona
         SpriteBatch spriteBatch;
 
         public SpriteFont font_damage;
+        public SpriteFont font_life;
 
         private CelAnimationManager celAnimationManager;
 
@@ -61,10 +62,7 @@ namespace Ramona
                 new Ghost(this,player,random),
                 new Ghost(this,player,random),
                 new Ghost(this,player,random),
-                new Ghost(this,player,random),
-                new Ghost(this,player,random),
-                new Ghost(this,player,random),
-                new Ghost(this,player,random),
+
                 player
             };
             
@@ -86,10 +84,11 @@ namespace Ramona
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font_damage = Content.Load<SpriteFont>("Font");
+            font_life = Content.Load<SpriteFont>("Font");
 
-            foreach(Sprite sprite in sprites)
+            foreach (Sprite sprite in sprites)
             {
-                sprite.Load(spriteBatch, font_damage);
+                sprite.Load(spriteBatch, font_damage,font_life);
             }
            
         }

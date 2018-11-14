@@ -5,8 +5,8 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/slonim/source/repos/Ramona/Ramona/Content/Font.spritefont</File>
-    <File>C:/Users/slonim/source/repos/Ramona/Ramona/Content/Textures/Ghost.png</File>
     <File>C:/Users/slonim/source/repos/Ramona/Ramona/Content/Textures/Ghost_death.png</File>
+    <File>C:/Users/slonim/source/repos/Ramona/Ramona/Content/Textures/my_ghost.png</File>
     <File>C:/Users/slonim/source/repos/Ramona/Ramona/Content/Textures/Ramona_run.png</File>
     <File>C:/Users/slonim/source/repos/Ramona/Ramona/Content/Textures/Ramona_Slam.png</File>
     <File>C:/Users/slonim/source/repos/Ramona/Ramona/Content/Textures/Ramona_Swing.png</File>

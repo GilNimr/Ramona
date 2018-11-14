@@ -49,10 +49,10 @@ namespace Ramona.Sprites
         protected override void LoadContent()
         {
             CelCount celCount = new CelCount(3, 1);
-            celAnimationManager.AddAnimation("Ghost", "Ghost", celCount, 10);
-            frameheight = celAnimationManager.GetAnimationFrameHeight("Ghost");
-            frameWidth = celAnimationManager.GetAnimationFrameWidth("Ghost");
-            celAnimationManager.ToggleAnimation("Ghost");
+            celAnimationManager.AddAnimation("my_ghost", "my_ghost", celCount, 10);
+            frameheight = celAnimationManager.GetAnimationFrameHeight("my_ghost");
+            frameWidth = celAnimationManager.GetAnimationFrameWidth("my_ghost");
+            celAnimationManager.ToggleAnimation("my_ghost");
 
             celAnimationManager.AddAnimation("Ghost_death", "Ghost_death", celCount, 10);
             frameheight = celAnimationManager.GetAnimationFrameHeight("Ghost_death");
@@ -64,7 +64,7 @@ namespace Ramona.Sprites
         {
             if (!hasdied)
             {
-                celAnimationManager.ResumeAnimation("Ghost");
+                celAnimationManager.ResumeAnimation("my_ghost");
                 if (player.position.X < position.X)
                 {
 
@@ -193,7 +193,7 @@ namespace Ramona.Sprites
         {
             spriteBatch.Begin();
             if(!hasdied)
-            celAnimationManager.Draw(gameTime, "Ghost", spriteBatch, position, direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
+            celAnimationManager.Draw(gameTime, "my_ghost", spriteBatch, position, direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
             else
                 celAnimationManager.Draw(gameTime, "Ghost_death", spriteBatch, position, direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
             if (life_minus)

@@ -20,18 +20,6 @@
 /processorParam:TextureFormat=Compressed
 /build:Font.spritefont
 
-#begin Textures/Ghost.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=False
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/Ghost.png
-
 #begin Textures/Ghost_death.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -43,6 +31,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/Ghost_death.png
+
+#begin Textures/my_ghost.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/my_ghost.png
 
 #begin Textures/Ramona_run.png
 /importer:TextureImporter
