@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/slonim/source/repos/Ramona/Ramona/Content/Font.spritefont</SourceFile>
+  <SourceTime>2018-11-14T15:02:35+02:00</SourceTime>
+  <DestFile>C:/Users/slonim/source/repos/Ramona/Ramona/Content/bin/Windows/Content/Font.xnb</DestFile>
+  <DestTime>2018-11-14T15:09:41.152991+02:00</DestTime>
+  <Importer>FontDescriptionImporter</Importer>
+  <ImporterTime>2018-09-24T00:55:52+03:00</ImporterTime>
+  <Processor>FontDescriptionProcessor</Processor>
+  <ProcessorTime>2018-09-24T00:55:52+03:00</ProcessorTime>
+  <Parameters>
+    <Key>PremultiplyAlpha</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Compressed</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>
