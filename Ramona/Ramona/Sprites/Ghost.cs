@@ -33,7 +33,7 @@ namespace Ramona.Sprites
             float x= random.Next(Game1.ScreenWidth / 2, Game1.ScreenWidth);
             position = new Vector2(x, y);
             //map_position = position.X;
-            speed = 0.5f;
+            speed = 1f;
             knockOut_speed = 10;
             life = 30;
 
@@ -76,10 +76,10 @@ namespace Ramona.Sprites
                 {
 
                     direction = Direction.Left;
-                    if (!IsTouchingRight(player) && _is_swung_timer == 0)
+                    if (!IsTouchingRight(player) && _is_swung_timer==0 )
                     {
                        
-                        life_minus = false;
+                        life_minus_swing = false;
 
                         if (!IsTouchingRight(Game1.sprites))
                         {
@@ -101,17 +101,18 @@ namespace Ramona.Sprites
                                 y_damage_font_position = position.Y - 50f;
                             }
                             _is_swung_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            if (_is_swung_timer < 1)
+                            if (_is_swung_timer < 0.5)
                                 position.X += knockOut_speed;
                             else
                                 _is_swung_timer = 0;
-                            if (!life_minus)
+                            if (!life_minus_swing)
                             {
                                 damage_to_life = 10;
                                 life -= damage_to_life;
-                                life_minus = true;
+                                life_minus_swing = true;
                             }
                         }
+                       
                         else if(attacking_player>0.5)
                         {
                             attacking_player = 0;
@@ -125,10 +126,10 @@ namespace Ramona.Sprites
                 {
 
                     direction = Direction.Right;
-                    if (!IsTouchingLeft(player) && _is_swung_timer == 0)
+                    if (!IsTouchingLeft(player) && _is_swung_timer == 0 )
                     {
                        
-                        life_minus = false;
+                        life_minus_swing = false;
 
                         if (!IsTouchingLeft(Game1.sprites))
                         {
@@ -148,16 +149,16 @@ namespace Ramona.Sprites
                                 y_damage_font_position = position.Y - 50f;
                             }
                             _is_swung_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            if (_is_swung_timer < 1)
+                            if (_is_swung_timer < 0.5)
                                 position.X += -knockOut_speed;
                             else
                                 _is_swung_timer = 0;
 
-                            if (!life_minus)
+                            if (!life_minus_swing)
                             {
                                 damage_to_life = 10;
                                 life -= damage_to_life;
-                                life_minus = true;
+                                life_minus_swing = true;
                             }
                         }
                         else if (attacking_player > 0.5&&!player.player_hit)
@@ -182,9 +183,49 @@ namespace Ramona.Sprites
                     if (!IsTouchingTop(Game1.sprites))
                         position.Y += +speed;
                 }
+                
+                if (IsTouchingBottom(player) || IsTouchingLeft(player) 
+                    || IsTouchingRight(player) || IsTouchingTop(player) || _is_slamed_timer > 0)
+                {
+                    if (player.slaming_enemy && player.slaming_enemy )
+                    {
+
+                        if (_is_slamed_timer == 0)
+                        {
+                            x_damage_font_position = position.X;
+                            y_damage_font_position = position.Y - 50f;
+                        }
+                        _is_slamed_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        if (_is_slamed_timer < 0.2)
+                        {
+                            if (player.position.X < position.X)
+                                position.X += knockOut_speed ;
+                            else
+                                position.X -= knockOut_speed ;
+
+                            if (player.position.Y < position.Y)
+                                position.Y += knockOut_speed ;
+                            else
+                                position.Y -= knockOut_speed ;
+                        }
+                        else
+                            _is_slamed_timer = 0;
+
+                        if (!life_minus_swing_slam)
+                        {
+                            damage_to_life = 6;
+                            life -= damage_to_life;
+                            life_minus_swing_slam = true;
+                        }
+                    }
+                    else
+                        life_minus_swing_slam = false;
+                }
             }
+            
             if (life <= 0)
             {
+                
                 hasdied = true;
                 death_on_screen +=(float) gameTime.ElapsedGameTime.TotalSeconds;
             }
@@ -205,7 +246,7 @@ namespace Ramona.Sprites
             celAnimationManager.Draw(gameTime, "my_ghost", spriteBatch, position, direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
             else
                 celAnimationManager.Draw(gameTime, "Ghost_death", spriteBatch, position, direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
-            if (life_minus)
+            if (life_minus_swing||life_minus_swing_slam)
             {
                 spriteBatch.DrawString(font_damage, damage_to_life.ToString(), Damage_font_position, Color.Red);
             }

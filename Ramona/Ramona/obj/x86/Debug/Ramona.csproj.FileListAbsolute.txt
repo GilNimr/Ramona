@@ -104,3 +104,4 @@ C:\CoolProject\Ramona\Ramona\obj\x86\Debug\Ramona.csproj.CopyComplete
 C:\Users\slonim\source\repos\Ramona\Ramona\bin\Windows\x86\Debug\Content\Textures\road.xnb
 C:\Users\slonim\source\repos\Ramona\Ramona\bin\Windows\x86\Debug\Content\Textures\street.xnb
 C:\Users\slonim\source\repos\Ramona\Ramona\bin\Windows\x86\Debug\Content\Textures\Street_2.xnb
+C:\Users\slonim\source\repos\Ramona\Ramona\bin\Windows\x86\Debug\Content\death.xnb

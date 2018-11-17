@@ -21,6 +21,7 @@ namespace Ramona
 
 
         public SpriteFont font_damage;
+        public static Texture2D death;
         public SpriteFont font_life;
 
         public static float map_position = 0 ;
@@ -41,6 +42,7 @@ namespace Ramona
 
         public static int ScreenWidth;
         public static int ScreenHeight;
+        private int dificulty_index;
 
         public Game1()
         {
@@ -105,14 +107,15 @@ namespace Ramona
            // scrollingBackgroundManager.AddBackground("street", "Street", new Vector2(0, 0), new Rectangle(0, 0, 1065, 392), 70, 0.5f, Color.White);
             scrollingBackgroundManager.AddBackground("road", "Road", new Vector2(0, 390), new Rectangle(0, 0, 1066, 356), 100, 0.1f, Color.White);
 
-
-    font_life = Content.Load<SpriteFont>("Font");
+            death = Content.Load<Texture2D>("death");
+           font_life = Content.Load<SpriteFont>("Font");
 
             foreach (Sprite sprite in sprites)
             {
                 sprite.Load(spriteBatch, font_damage,font_life);
             }
-           
+
+           // player.death = this.death;
 
         }
 
@@ -159,27 +162,41 @@ namespace Ramona
                 scrollingBackgroundManager.ScrollRate = 0.0f;
                 
             }
-            if (map_position >= 500)
+            if (map_position % 1000>=980 )
             {
-                map_position = 0;
-               ghosty=(Ghost) ghost_for_cloning.Clone();
-                ghosty.position.X = ScreenWidth + 75;
-                ghosty.position.Y = random.Next(0, Game1.ScreenHeight);
-                sprites.Add(ghosty);
-                Components.Add(ghosty);
+                map_position += 21;
+                dificulty_index++;
+                for(int i=0;i<dificulty_index;i++)
+                Add_Ghost(dificulty_index);
+                
             }
-            for(int i=0; i< sprites.Count;i++)
+
+            for (int i=0; i< sprites.Count;i++)
             {
                 if (sprites[i].death_on_screen > 3)
                 {
                     Components.Remove(sprites[i]);
                     sprites.RemoveAt(i);
                     i--;
+                    player.kills++;
                 }
             }
-
+            if (player.player_death_on_screen>3)
+            {
+                this.Exit();
+            }
 
             base.Update(gameTime);
+        }
+
+        private void Add_Ghost(int dificulty)
+        {
+            ghosty = (Ghost)ghost_for_cloning.Clone();
+            ghosty.position.X = ScreenWidth + 75;
+            ghosty.position.Y = random.Next(0, Game1.ScreenHeight);
+            ghosty.speed += 0.1f * dificulty;
+            sprites.Add(ghosty);
+            Components.Add(ghosty);
         }
 
         protected override void Draw(GameTime gameTime)

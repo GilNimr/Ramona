@@ -4,6 +4,7 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/slonim/source/repos/Ramona/Ramona/Content/death.png</File>
     <File>C:/Users/slonim/source/repos/Ramona/Ramona/Content/Font.spritefont</File>
     <File>C:/Users/slonim/source/repos/Ramona/Ramona/Content/Textures/Ghost_death.png</File>
     <File>C:/Users/slonim/source/repos/Ramona/Ramona/Content/Textures/my_ghost.png</File>
@@ -15,6 +16,7 @@
     <File>C:/Users/slonim/source/repos/Ramona/Ramona/Content/Textures/Street_2.jpg</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

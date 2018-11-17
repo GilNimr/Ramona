@@ -22,11 +22,13 @@ namespace Ramona.Sprites
 
 
         public Vector2 position;
-        //public float map_position;
+        
         public float speed;
         public float knockOut_speed;
         protected float _is_swung_timer;
-        protected bool life_minus = false;
+        protected float _is_slamed_timer;
+        protected bool life_minus_swing = false;
+            protected bool life_minus_swing_slam = false;
 
 
         public enum Direction { Left, Right };
@@ -85,7 +87,7 @@ namespace Ramona.Sprites
         #region Colloision
         protected bool IsTouchingLeft(Sprite sprite)  
         {
-            return this.Rectangle.Right + this.speed*3 > sprite.Rectangle.Left &&
+            return this.Rectangle.Right + (this.speed) > sprite.Rectangle.Left &&
               this.Rectangle.Left<sprite.Rectangle.Left &&
               this.Rectangle.Bottom> sprite.Rectangle.Top &&
               this.Rectangle.Top<sprite.Rectangle.Bottom;
@@ -94,7 +96,7 @@ namespace Ramona.Sprites
     
         protected bool IsTouchingRight(Sprite sprite)
         {
-            return this.Rectangle.Left - this.speed*3 < sprite.Rectangle.Right &&
+            return this.Rectangle.Left + this.speed < sprite.Rectangle.Right &&
 
               this.Rectangle.Right > sprite.Rectangle.Right &&
               this.Rectangle.Bottom > sprite.Rectangle.Top &&
